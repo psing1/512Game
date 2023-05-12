@@ -1,0 +1,448 @@
+﻿class Board:
+    private row1, row2, row3, row4: arrays of integers
+ 
+    function IntegerInArray(a: array of integers, targ: integer) -> boolean:
+        for i in a:
+            if i = targ:
+                return true
+        return false
+ 
+    function getRandomNumber(min: integer, max: integer) -> integer:
+        return (random number between min and max)
+ 
+    constructor Board(len: integer):
+        row1, row2, row3, row4 = arrays of integers of length len
+ 
+    function ins_rand():
+        row_chosen = array of integers of length 4
+        temp1: integer
+        returnValue: integer
+        temp: integer
+        do:
+            temp = getRandomNumber(0, 4)
+            switch temp:
+                case 0:
+                    row_chosen = row1
+                case 1:
+                    row_chosen = row2
+                case 2:
+                    row_chosen = row3
+                case 3:
+                    row_chosen = row4
+        while IntegerInArray(row_chosen, 0)
+        do:
+            temp1 = getRandomNumber(0, 4)
+        while row_chosen[temp1] ≠ 0
+        rand_1to10 = getRandomNumber(1, 11)
+        if rand_1to10 = 10:
+            returnValue = 4
+        else:
+            returnValue = 2
+        switch temp:
+            case 0:
+                row1[temp1] = returnValue
+            case 1:
+                row2[temp1] = returnValue
+            case 2:
+                row3[temp1] = returnValue
+            case 3:
+                row4[temp1] = returnValue
+ 
+    function same_as(b1: Board) -> boolean:
+        for i from 0 to 3:
+            for j from 0 to 3:
+                if this.getBoard()[i][j] ≠ b1.getBoard()[i][j]:
+                    return false
+        return true
+ 
+    function print_board():
+        print row1
+        print row2
+        print row3
+        print row4
+ 
+    function set_board(r1: array of integers, r2: array of integers, r3: array of integers, r4: array of integers):
+        row1 = copy of r1
+        row2 = copy of r2
+        row3 = copy of r3
+        row4 = copy of r4
+ 
+    function getBoard() -> array of array of integers:
+        return new array of arrays of integers containing row1, row2, row3, row4
+ 
+    
+function compress_up():
+    temp = 0
+    for indC from 0 to 3:
+        if row1[indC] equals 0:
+            temp = row2[indC]
+            row1[indC] = temp
+            row2[indC] = 0
+    for indC from 0 to 3:
+        gap = 0
+        if row1[indC] equals 0:
+            gap += 1
+        if row2[indC] equals 0:
+            gap += 1
+        switch gap:
+            case 0:
+                break
+            case 1:
+                temp = row3[indC]
+                row2[indC] = temp
+                row3[indC] = 0
+                break
+            case 2:
+                temp = row3[indC]
+                row1[indC] = temp
+                row3[indC] = 0
+                break
+    for indC from 0 to 3:
+        gap = 0
+        if row1[indC] equals 0:
+            gap += 1
+        if row2[indC] equals 0:
+            gap += 1
+        if row3[indC] equals 0:
+            gap += 1
+        switch gap:
+            case 0:
+                break
+            case 1:
+                temp = row4[indC]
+                row3[indC] = temp
+                row4[indC] = 0
+                break
+            case 2:
+                temp = row4[indC]
+                row2[indC] = temp
+                row4[indC] = 0
+                break
+            case 3:
+                temp = row4[indC]
+                row1[indC] = temp
+                row4[indC] = 0
+                break
+ 
+function compress_down():
+    temp = 0
+    for indC from 0 to 3:
+        if row4[indC] equals 0:
+            temp = row3[indC]
+            row4[indC] = temp
+            row3[indC] = 0
+    for indC from 0 to 3:
+        gap = 0
+        if row4[indC] equals 0:
+            gap += 1
+        if row3[indC] equals 0:
+            gap += 1
+        switch gap:
+            case 0:
+                break
+            case 1:
+                temp = row2[indC]
+                row3[indC] = temp
+                row2[indC] = 0
+                break
+            case 2:
+                temp = row2[indC]
+                row4[indC] = temp
+                row2[indC] = 0
+                break
+    for indC from 0 to 3:
+        gap = 0
+        if row4[indC] equals 0:
+            gap += 1
+        if row3[indC] equals 0:
+            gap += 1
+        if row2[indC] equals 0:
+            gap += 1
+        switch gap:
+            case 0:
+                break
+            case 1:
+                temp = row1[indC]
+                row2[indC] = temp
+                row1[indC] = 0
+                break
+            case 2:
+                temp = row1[indC]
+                row3[indC] = temp
+                row1[indC] = 0
+                break
+            case 3:
+                temp = row1[indC]
+                row4[indC] = temp
+                row1[indC] = 0
+                break
+ 
+ 
+Function compress_left():
+    for r from 0 to 2:
+        for i from 1 to 3:
+            if row1[i-1] equals 0:
+                set row1[i-1] to row1[i]
+                set row1[i] to 0
+            if row2[i-1] equals 0:
+                set row2[i-1] to row2[i]
+                set row2[i] to 0
+            if row3[i-1] equals 0:
+                set row3[i-1] to row3[i]
+                set row3[i] to 0
+            if row4[i-1] equals 0:
+                set row4[i-1] to row4[i]
+                set row4[i] to 0
+ 
+Function compress_right():
+    for r from 0 to 2:
+        for i from 2 to 0 (in reverse order):
+            if row1[i+1] equals 0:
+                set row1[i+1] to row1[i]
+                set row1[i] to 0
+            if row2[i+1] equals 0:
+                set row2[i+1] to row2[i]
+                set row2[i] to 0
+            if row3[i+1] equals 0:
+                set row3[i+1] to row3[i]
+                set row3[i] to 0
+            if row4[i+1] equals 0:
+                set row4[i+1] to row4[i]
+                set row4[i] to 0
+ 
+Function merge_up():
+    For each column in the grid:
+        If the current element in row 1 is equal to the corresponding element in row 2:
+            Set temp to the current element in row 2.
+            Set the current element in row 1 to the value of temp times 2.
+            Set the current element in row 2 to 0.
+        
+        If the current element in row 3 is equal to the corresponding element in row 2:
+            Set temp to the current element in row 3.
+            Set the current element in row 2 to the value of temp times 2.
+            Set the current element in row 3 to 0.
+ 
+        If the current element in row 3 is equal to the corresponding element in row 4:
+            Set temp to the current element in row 4.
+            Set the current element in row 3 to the value of temp times 2.
+            Set the current element in row 4 to 0.
+ 
+Function merge_down():
+    For each column in the grid:
+        If the current element in row 4 is equal to the corresponding element in row 3:
+            Set temp to the current element in row 3.
+            Set the current element in row 4 to the value of temp times 2.
+            Set the current element in row 3 to 0.
+ 
+        If the current element in row 3 is equal to the corresponding element in row 2:
+            Set temp to the current element in row 2.
+            Set the current element in row 3 to the value of temp times 2.
+            Set the current element in row 2 to 0.
+ 
+        If the current element in row 1 is equal to the corresponding element in row 2:
+            Set temp to the current element in row 1.
+            Set the current element in row 2 to the value of temp times 2.
+            Set the current element in row 1 to 0.
+ 
+Function merge_right():
+    # merge rows from right to left
+ 
+    # Check for merges in row1
+    if the value at index 3 in row1 is equal to the value at index 2 in row1:
+        Set the value at index 3 in row1 to twice the value at index 2 in row1
+        Set the value in at index 2 in row1 to 0
+    if the value at index 0 in row1 is equal to the value at index 1 in row1:
+        Set the value at index 1 in row1 to twice the value at index 0 in row1
+        Set the value at index 0 in row1 to 0
+    if the value at index 1 in row1 is equal to the value at index 2 in row1:
+        Set the value at index 2 in row1 to twice the value at index 1 in row1
+        Set the value at index 1 in row1 to 0
+ 
+    # Check for merges in row2
+    if the value at index 2 in row3 is equal to the value at index 2 in row2:
+        Set the value at index 2 in row3 to twice the value at index 2 in row2
+        Set the value at index 2 in row2 to 0
+    if the value at index 0 in row2 is equal to the value at index 1 in row2:
+        Set the value at index 1 in row2 to twice the value at index 0 in row2
+        Set the value at index 0 in row2
+    if the value at index 1 in row2 is equal to the value at index 2 in row2:
+        Set the value at index 2 in row2 to twice the value at index 1 in row2
+        Set the value at index 1 in row2 to 0
+ 
+    # Check for merges in row3
+    if the value at index 3 in row3 is equal to the value at index 2 in row3:
+        Set the value at index 3 in row3 to twice the value at index 2 in row3
+        Set the value at index 2 in row3 to 0
+    if the value at index 0 in row3 is equal to the value at index 1 in row3:
+        Set the value at index 1 in row3 to twice the value at index 0 in row3
+        Set the value at index 0 in row3 to 0
+    if the value at index 1 in row3 is equal to the value at index 2 in row3:
+        Set the value at index 2 in row3 to twice the value at index 1 in row3
+        Set the value at index 1 in row3 to 0
+ 
+    # Check for merges in row4
+    if the value at index 3 in row4 is equal to the value at index 2 in row4:
+        Set the value at index 3 in row4 to twice the value at index 2 in row4
+        Set the value at index 2 in row4 to 0
+    if the value at index 0 in row4 is equal to the value at index 1 in row4:
+        Set the value at index 1 in row4 to twice the value at index 0 in row4
+        Set the value at index 0 in row4 to 0
+    if the value at index 1 in row4 is equal to the value at index 2 in row4:
+        Set the value at index 2 in row4 to twice the value at index 1 in row4
+        Set the value at index 0 in row4
+
+
+
+
+Function merge_left:
+If the value at index 1 in row1 is equal to the value at index 0 in row1:
+        Set the value at index 0 in row1 to be twice the value at index 1 in row1
+        Set the value at index 1 in row1 to 0
+If the value at index 1 in row1 is equal to the value at index 2 in row1:
+        Set the value at index 1 in row1 to be twice the value at index 2 in row1
+        Set the value at index 2 in row1 to 0
+If the value at index 2 in row1 is equal to the value at index 3 in row1:
+        Set the value at index 2 in row1 to be twice the value at index 3 in row1
+        Set the value at index 3 in row1 to 0
+If the value at index 1 in row2 is equal to the value at index 0 in row2:
+        Set the value at index 0 in row2 to be twice the value at index 1 in row2
+        Set the value at index 1 in row2 to 0
+If the value at index 1 in row2 is equal to the value at index 2 in row2:
+        Set the value at index 1 in row2 to be twice the value at index 2 in row2
+        Set the value at index 2 in row2 to 0
+If the value at index 2 in row2 is equal to the value at index 3 in row2:
+        Set the value at index 2 in row2 to be twice the value at index 3 in row2
+        Set the value at index 3 in row2 to 0
+If the value at index 1 in row3 is equal to the value at index 0 in row3:
+        Set the value at index 0 in row3 to be twice the value at index 1 in row3
+        Set the value at index 1 in row3 to 0
+If the value at index 1 in row3 is equal to the value at index 2 in row3:
+        Set the value at index 1 in row3 to be twice the value at index 2 in row3
+        Set the value at index 2 in row3 to 0
+If the value at index 2 in row3 is equal to the value at index 3 in row3:
+        Set the value at index 2 in row3 to be twice the value at index 3 in row3
+        Set the value at index 3 in row3 to 0
+If the value at index 1 in row4 is equal to the value at index 0 in row4:
+        Set the value at index 0 in row4 to be twice the value at index 1 in row4
+        Set the value at index 1 in row4 to 0
+If the value at index 1 in row4 is equal to the value at index 2 in row4:
+        Set the value at index 1 in row4 to be twice the value at index 2 in row4
+        Set the value at index 2 in row4 to 0
+If the value at index 2 in row4 is equal to the value at index 3 in row4:
+        Set the value at index 2 in row4 to be twice the value at index 3 in row4
+        Set the value at index 3 in row4 to 0
+
+
+Function check_legal(dir, b1, ghost):
+// Create a copy of the ghost board copy_ghost = new Board(4)
+copy_ghost.set_board(ghost.getBoard()[0], ghost.getBoard()[1], ghost.getBoard()[2], ghost.getBoard()[3])
+
+
+// Perform board operations based on the direction input
+switch dir:
+    case 0:
+        copy_ghost.compress_up()
+        copy_ghost.merge_up()
+        copy_ghost.compress_up()
+    case 1:
+        copy_ghost.compress_down()
+        copy_ghost.merge_down()
+        copy_ghost.compress_down()
+    case 2:
+        copy_ghost.compress_left()
+        copy_ghost.merge_left()
+        copy_ghost.compress_left()
+    case 3:
+        copy_ghost.compress_right()
+        copy_ghost.merge_right()
+        copy_ghost.compress_right()
+
+
+// Check if the original board and the modified ghost board are the same
+if b1.same_as(copy_ghost) THEN
+    RETURN FALSE
+else
+    RETURN TRUE
+
+
+FUNCTION Colour():
+    // create a list of JLabels and JPanels
+    LabelList = List.of(B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13, B14, B15, B16)
+    PanelList = List.of(Block1, Block2, Block3, Block4, Block5, Block6, Block7, Block8, Block9, Block10, Block11, Block12, Block13, Block14, Block15, Block16)
+    
+    // loop through each element in the list
+    FOR x = 0 to 15:
+        // get the corresponding JPanel and JLabel
+        panel = PanelList.get(x)
+        label = LabelList.get(x)
+        
+        // switch statement to set the background color based on the JLabel's text
+        SWITCH label.getText() DO:
+            CASE "0":
+                panel.setBackground(new Color(50,50,50))
+                label.setForeground(new Color(50,50,50))
+            CASE "2":
+                panel.setBackground(new Color(255,255,13))
+            CASE "4":
+                panel.setBackground(new Color(250,206,12))
+            CASE "8":
+                panel.setBackground(new Color(255,183,0))
+            CASE "16":
+                panel.setBackground(new Color(250,159,12))
+            CASE "32":
+                panel.setBackground(new Color(255,131,13))
+            CASE "64":
+                panel.setBackground(new Color(255,112,13))
+            CASE "128":
+                panel.setBackground(new Color(250,75,12))
+            CASE "256":
+                panel.setBackground(new Color(255,30,0))
+            CASE "512":
+                // create a new Win object
+                won = new WIn()
+                
+                // get the current board and update the GUI
+                temp = main_board.getBoard()
+                setGUIBoard(temp[0], temp[1], temp[2], temp[3])
+                
+                // set the background color and update the ghost board
+                panel.setBackground(new Color(255,13,159))
+                ghost_board.set_board(main_board.getBoard()[0], main_board.getBoard()[1], main_board.getBoard()[2], main_board.getBoard()[3])
+                
+                // wait for some time and display the Win window
+                fib(45)
+                won.setVisible(true)
+                
+                // hide the current window and reset the board
+                this.setVisible(false)
+                Reset()
+                
+            DEFAULT:
+                // do nothing
+
+
+Add keyListener
+
+
+If up arrow pressed:
+        call compress_up
+        call merge_up
+        call compress_up
+        call colour
+Else if right arrow pressed:
+        call compress_right
+        call merge_right
+        call compress_right
+        call colour
+Else if right arrow pressed:
+        call compress_left
+        call merge_left
+        call compress_left
+        call colour
+Else if right arrow pressed:
+        call compress_left
+        call merge_left
+        call compress_left
+        call colour
+Else 
+        Do nothing
